@@ -13,27 +13,35 @@ export default class Main extends Component {
   };
 
   componentDidMount() {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=iron`)
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=iron`)
       .then((res) => res.json())
       .then(({ Search: data }) =>
         this.setState(() => ({
           movies: data,
           loading: false,
         }))
-      );
+      )
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
     // .then(({ Search: data }) => this.setState({ movies: data }));
   }
 
   onSearchMovies = (search, type) => {
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${search}&type=${
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${search}&type=${
         type !== "all" ? type : ""
       }`
     )
       .then((res) => res.json())
       .then(({ Search: data }) =>
         this.setState(() => ({ movies: data, loading: false }))
-      );
+      )
+      .catch((err) => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
     // .then(({ Search: data }) => this.setState({ movies: data }));
   };
 
